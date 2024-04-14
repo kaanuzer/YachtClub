@@ -19,5 +19,11 @@ namespace Persistence.Contexts
         public DbSet<YachtFeature> YachtFeatures { get; set; }
         public DbSet<YachtFeatureCategory> YachtFeatureCategories { get; set; }
         public DbSet<YachtImage> YachtImages { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Manufacturer>().HasOne(o=>o.Yacht).WithOne(o=>o.Manufacturer).HasForeignKey<Yacht>(f=>f.ManufacturerId);
+        }
     }
 }

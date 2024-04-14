@@ -18,7 +18,7 @@
         public int BrokerageFirmId { get; set; }
         public BrokerageFirm? BrokerageFirm { get; set; }
         public int ManufacturerId { get; set; }
-        public Manufacturer? Manufacturer { get; set; }
+        public required Manufacturer Manufacturer { get; set; }
         public ICollection<YachtImage>? YachtImages { get; set; }
         public int YachtCategoryId { get; set; }
         public required YachtCategory YachtCategory { get; set; }
