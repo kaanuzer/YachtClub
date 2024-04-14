@@ -1,4 +1,4 @@
-﻿namespace Domain.entities
+﻿namespace Domain.Entities
 {
     public class Rental : BaseEntity
     {
