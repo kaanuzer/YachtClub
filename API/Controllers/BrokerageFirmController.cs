@@ -19,16 +19,23 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateBrokageFirm([FromBody] BrokerageFirm brokerageFirm)
+        public async Task<IActionResult> CreateBrokageFirm([FromBody] BrokerageFirm brokerageFirm)
         {
             await Mediator.Send(new Create.Command { BrokerageFirm = brokerageFirm });
             return Ok();
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateBrokageFirm([FromBody] BrokerageFirm brokerageFirm)
+        public async Task<IActionResult> UpdateBrokageFirm([FromBody] BrokerageFirm brokerageFirm)
         {
             await Mediator.Send(new Edit.Command { BrokerageFirm = brokerageFirm });
+            return Ok();
+        }
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteBrokageFirm(int Id)
+        {
+            await Mediator.Send(new Delete.Command { Id = Id });
             return Ok();
         }
     }

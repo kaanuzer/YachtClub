@@ -1,4 +1,5 @@
 using Application.BrokerageFirms;
+using Application.Core;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
 
@@ -15,6 +16,8 @@ builder.Services.AddSwaggerGen();
 //Mediator
 builder.Services.AddMediatR(cfg=>cfg.RegisterServicesFromAssembly(typeof(List.Handler).Assembly));
 
+//AutoMapper
+builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
 //DBContext
 builder.Services.AddDbContext<DataContext>(opt =>

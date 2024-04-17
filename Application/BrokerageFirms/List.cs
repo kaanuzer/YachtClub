@@ -12,7 +12,6 @@ namespace Application.BrokerageFirms
         public class Handler : IRequestHandler<Query, List<BrokerageFirm>>
         {
             private readonly DataContext _context;
-
             public Handler(DataContext context)
             {
                 _context = context;

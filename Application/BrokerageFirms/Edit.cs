@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Domain.Entities;
 using MediatR;
 using Persistence.Contexts;
@@ -12,16 +13,18 @@ namespace Application.BrokerageFirms
     {
         public class Command : IRequest
         {
-            public BrokerageFirm BrokerageFirm { get; set; }
+            public required BrokerageFirm BrokerageFirm { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
+            private readonly IMapper _mapper;
 
-            public Handler(DataContext context)
+            public Handler(DataContext context, IMapper mapper)
             {
                 _context = context;
+                _mapper = mapper;
             }
 
             public async Task Handle(Command request, CancellationToken cancellationToken)
@@ -32,16 +35,7 @@ namespace Application.BrokerageFirms
                     throw new ArgumentNullException(nameof(brokageFirm));
                 }
 
-                brokageFirm.ContactPerson =
-                    request.BrokerageFirm.ContactPerson ?? brokageFirm.ContactPerson;
-                brokageFirm.Email = request.BrokerageFirm.Email ?? brokageFirm.Email;
-                brokageFirm.FirmName = request.BrokerageFirm.FirmName ?? brokageFirm.FirmName;
-                brokageFirm.Location = request.BrokerageFirm.Location ?? brokageFirm.Location;
-                brokageFirm.PhoneNumber =
-                    request.BrokerageFirm.PhoneNumber ?? brokageFirm.PhoneNumber;
-                brokageFirm.LastModified = DateTime.UtcNow;
-                brokageFirm.LastModifiedBy =
-                    request.BrokerageFirm.LastModifiedBy ?? brokageFirm.LastModifiedBy;
+                _mapper.Map(request.BrokerageFirm, brokageFirm);
 
                 await _context.SaveChangesAsync();
             }
