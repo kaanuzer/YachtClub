@@ -1,5 +1,4 @@
-using Application.BrokerageFirms;
-using Application.Core;
+using API.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
 
@@ -9,21 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddApplicationServices(builder.Configuration);
 
-//Mediator
-builder.Services.AddMediatR(cfg=>cfg.RegisterServicesFromAssembly(typeof(List.Handler).Assembly));
-
-//AutoMapper
-builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
-
-//DBContext
-builder.Services.AddDbContext<DataContext>(opt =>
-{
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
 
 var app = builder.Build();
 
